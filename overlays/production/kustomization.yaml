@@ -9,5 +9,5 @@ resources:
 
 images:
   - name: quarkus
-    newName: image-registry.openshift-image-registry.svc:5000/kcd-lima/code-with-quarkus-kcd
+    newName: rtaparay/code-with-quarkus
     newTag: 0.0.0
