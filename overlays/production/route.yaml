@@ -1,15 +1,22 @@
-apiVersion: route.openshift.io/v1
-kind: Route
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: code-with-quarkus-kcd
+  namespace: dev
   labels:
     app: code-with-quarkus-kcd
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
-  host: code-with-quarkus-kcd.apps.cluster-p5t6h.dynamic.redhatworkshops.io
-  to:
-    kind: Service
-    name: code-with-quarkus-kcd
-    weight: 100
-  tls:
-    termination: edge
-  wildcardPolicy: None
+  ingressClassName: nginx
+  rules:
+  - host: v2.devops.local
+    http:
+      paths:
+      - path: /v2
+        pathType: Exact
+        backend:
+          service:
+            name: code-with-quarkus-kcd
+            port:
+              number: 8080
